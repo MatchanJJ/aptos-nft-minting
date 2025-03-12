@@ -1,0 +1,18 @@
+[package]
+name = "nft-mintv3"
+version = "1.0.0"
+authors = []
+
+[addresses]
+matchan_addr = "454a781214b65696b9747ff5cf4c5ff41e68b10cf4fcbfa9f842fe35e4fbfe45"
+
+[dev-addresses]
+
+[dependencies]
+
+AptosFramework = {git = "https://github.com/aptos-labs/aptos-framework.git", subdir = "aptos-framework", rev = "devnet" }
+AptosToken = { git = "https://github.com/aptos-labs/aptos-framework.git", subdir = "aptos-token", rev = "devnet" }
+AptosTokenObjects = { git = "https://github.com/aptos-labs/aptos-framework.git", subdir = "aptos-token-objects", rev = "devnet" }
+
+
+[dev-dependencies]
