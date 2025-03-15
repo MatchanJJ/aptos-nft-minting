@@ -7,13 +7,17 @@ module matchan_addr::NFTMinterV3 {
     use std::vector;
     use std::signer;
 
-    
+    const OWNER_ADDR: address = @matchan_addr; 
+
     struct MintingCounter has key {
         counter: u64,
     }
     
-        public entry fun init(creator: &signer) {
-        if (!exists<MintingCounter>(signer::address_of(creator))) {
+    public entry fun init(creator: &signer) acquires MintingCounter {
+        let creator_addr = signer::address_of(creator);
+        assert!(creator_addr == OWNER_ADDR, 1); 
+
+        if (!exists<MintingCounter>(OWNER_ADDR)) {
             let counter = MintingCounter { counter: 0 };
             move_to(creator, counter);
         }
@@ -77,8 +81,7 @@ module matchan_addr::NFTMinterV3 {
         let description: String = utf8(TOKEN_DESCRIPTION);
         let url: String = utf8(TOKEN_URL);
         
-        let signer_addr = signer::address_of(creator);
-        let counter_ref = borrow_global_mut<MintingCounter>(signer_addr);
+        let counter_ref = borrow_global_mut<MintingCounter>(OWNER_ADDR);
         counter_ref.counter = counter_ref.counter + 1;
         
         // Create token name with counter
@@ -91,7 +94,7 @@ module matchan_addr::NFTMinterV3 {
         vector::append(&mut name_bytes, number);
         
         let token_name = utf8(name_bytes);
-    
+
         token::create_named_token(
             creator,
             collection_name,
