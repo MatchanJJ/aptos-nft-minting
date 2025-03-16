@@ -104,4 +104,9 @@ module matchan_addr::NFTMinterV3 {
             url,
         );
     }
+
+    // Transfer function
+    public entry fun transfer<T: key>(owner: &signer, object: token::Token, to: address) {
+        token::transfer(owner, object, to);
+    }
 }
